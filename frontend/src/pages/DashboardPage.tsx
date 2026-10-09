@@ -77,7 +77,7 @@ export function DashboardPage() {
         </div>
         <div className="flex items-center gap-2">
           <button onClick={() => navigate('/follow-ups?new=true')} className="flex items-center gap-1.5 rounded-md border border-[#e6eaf1] bg-white px-3 py-2 text-xs font-semibold text-[#485667] hover:bg-[#f6f8fc] dark:border-[#3b4a59] dark:bg-[#202b36] dark:text-[#d4dde6] dark:hover:bg-[#293745]"><CalendarClock className="h-3.5 w-3.5" /> Schedule follow-up</button>
-          <button onClick={() => navigate('/leads?new=true')} className="flex items-center gap-1.5 rounded-md bg-[#01a0e2] px-3 py-2 text-xs font-semibold text-white hover:bg-[#01a0e2]"><Plus className="h-3.5 w-3.5" /> New Lead</button>
+          <button onClick={() => navigate('/leads?new=true')} className="flex items-center gap-1.5 rounded-md bg-[#01a0e2] px-3 py-2 text-xs font-semibold text-white hover:bg-[#eaf5e5] hover:text-[#365f22]"><Plus className="h-3.5 w-3.5" /> New Lead</button>
         </div>
       </div>
 
@@ -100,7 +100,7 @@ export function DashboardPage() {
       </Panel>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <Panel className="overflow-hidden transition-shadow duration-200 hover:shadow-[0_8px_24px_rgba(1,160,226,0.2)] dark:hover:shadow-[0_8px_24px_rgba(1,160,226,0.16)]">
+        <Panel className="overflow-hidden transition-shadow duration-200 hover:shadow-[0_8px_24px_rgba(85,166,48,0.22)] dark:hover:shadow-[0_8px_24px_rgba(85,166,48,0.18)]">
           <div className="flex items-center justify-between border-b border-[#edf0f6] px-4 py-3 dark:border-[#2d3b49]"><div><h2 className="text-sm font-semibold text-[#202b37] dark:text-[#e5eaf0]">Pending follow-ups</h2><p className="mt-1 text-xs text-[#8792a0] dark:text-[#aab7c4]">Saved scheduled actions</p></div><button onClick={() => navigate('/follow-ups')} className="flex items-center gap-1 text-xs font-semibold text-[#01a0e2]">View all <ArrowRight className="h-3 w-3" /></button></div>
           {pendingFollowUps.length ? <div className="divide-y divide-[#f0f2f7] dark:divide-[#2d3b49]">{pendingFollowUps.map((item) => <div key={item.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-3"><div><p className="text-xs font-semibold text-gray-800 dark:text-[#e5eaf0]">{item.lead?.name ?? 'Lead'}</p><p className="mt-1 text-[11px] text-gray-500 dark:text-[#aab7c4]">{item.type.replace('_', ' ')} · {item.notes || 'No notes'}</p></div><div className="text-right"><p className="text-[11px] font-medium text-gray-700 dark:text-[#cbd5df]">{new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(item.followUpDate))}</p><p className="mt-1 text-[10px] text-gray-500 dark:text-[#aab7c4]">{item.priority}</p></div></div>)}</div> : <EmptyState icon={CalendarClock} title="No pending follow-ups" description="Schedule an action and it will appear here." action={{ label: 'Schedule follow-up', onClick: () => navigate('/follow-ups?new=true') }} />}
         </Panel>

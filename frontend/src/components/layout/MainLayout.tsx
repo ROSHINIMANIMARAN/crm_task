@@ -146,7 +146,7 @@ export function MainLayout() {
                     `flex items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-[12px] font-medium transition-all ${
                       isActive
                         ? 'bg-[#01a0e2] text-white shadow-sm'
-                        : 'text-[#52616d] hover:bg-[#f2f5fa] hover:text-[#01a0e2]'
+                        : 'text-[#52616d] hover:bg-[#eaf5e5] hover:text-[#4f8f27]'
                     }`
                   }
                 >
@@ -184,7 +184,7 @@ export function MainLayout() {
           {/* Search trigger */}
           <button
             onClick={() => setSearchOpen(true)}
-            className="flex h-8 min-w-0 w-full max-w-[600px] flex-1 items-center gap-2 rounded-xl bg-[#eff3ff] px-3 text-left text-sm text-[#8290a1] transition-colors hover:bg-[#e8edfc] sm:h-10 sm:px-4"
+            className="flex h-8 min-w-0 w-full max-w-[600px] flex-1 items-center gap-2 rounded-xl bg-[#eff3ff] px-3 text-left text-sm text-[#8290a1] transition-colors hover:bg-[#eaf5e5] sm:h-10 sm:px-4"
           >
             <Search className="w-4 h-4 flex-shrink-0" />
             <span className="flex-1 truncate">Search leads, units, bookings…</span>
@@ -198,7 +198,7 @@ export function MainLayout() {
                 onClick={() => setActionOpen(v => !v)}
                 aria-label="New Action"
                 aria-expanded={actionOpen}
-                className="flex h-8 w-8 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#01a0e2] px-0 text-sm font-medium text-white transition-colors hover:bg-[#008bc9] sm:h-10 sm:w-auto sm:justify-start sm:gap-2 sm:px-4"
+                className="flex h-8 w-8 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#01a0e2] px-0 text-sm font-medium text-white transition-colors hover:bg-[#eaf5e5] hover:text-[#365f22] sm:h-10 sm:w-auto sm:justify-start sm:gap-2 sm:px-4"
               >
                 <Plus className="w-4 h-4" />
                 <span className="hidden sm:block">New Action</span>
@@ -256,7 +256,7 @@ export function MainLayout() {
                         <button
                           type="button"
                           onClick={() => notificationsService.markAllRead()}
-                          className="flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium text-sky-700 hover:bg-sky-50"
+                          className="flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium text-sky-700 hover:bg-[#eaf5e5] hover:text-[#4f8f27]"
                         >
                           <CheckCheck className="h-3.5 w-3.5" />
                           Mark all read

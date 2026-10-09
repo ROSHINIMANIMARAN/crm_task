@@ -123,7 +123,7 @@ export function LeadDetailPage() {
                   <button key={s} onClick={() => !isCurrent && stageMutation.mutate(s)}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                       isCurrent ? 'bg-[#01a0e2] text-white' :
-                      isDone    ? 'bg-sky-50 text-sky-700 hover:bg-sky-100' :
+                      isDone    ? 'bg-sky-50 text-sky-700 hover:bg-[#eaf5e5] hover:text-[#4f8f27]' :
                                   'bg-gray-50 text-gray-400 hover:bg-gray-100'
                     }`}>
                     <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold border ${
@@ -183,7 +183,7 @@ export function LeadDetailPage() {
                     className="w-full text-sm border border-gray-200 rounded-xl px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-primary-500" />
                   <button onClick={() => noteText.trim() && noteMutation.mutate()}
                     disabled={!noteText.trim() || noteMutation.isPending}
-                    className="mt-2 text-xs bg-[#01a0e2] text-white px-3 py-1.5 rounded-lg disabled:opacity-40 hover:bg-[#008bc9] transition-colors">
+                    className="mt-2 text-xs bg-[#01a0e2] text-white px-3 py-1.5 rounded-lg disabled:opacity-40 hover:bg-[#eaf5e5] hover:text-[#365f22] transition-colors">
                     {noteMutation.isPending ? 'Saving…' : 'Add Note'}
                   </button>
                 </div>

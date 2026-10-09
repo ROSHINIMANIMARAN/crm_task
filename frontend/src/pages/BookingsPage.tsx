@@ -146,7 +146,7 @@ function BookingModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: 
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={onClose} className="flex-1 border border-gray-200 rounded-xl py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
             <button type="submit" disabled={isSubmitting || mutation.isPending}
-              className="flex-1 bg-[#01a0e2] text-white rounded-xl py-2.5 text-sm font-semibold hover:bg-[#008bc9] disabled:opacity-60 flex items-center justify-center gap-2">
+              className="flex-1 bg-[#01a0e2] text-white rounded-xl py-2.5 text-sm font-semibold hover:bg-[#eaf5e5] hover:text-[#365f22] disabled:opacity-60 flex items-center justify-center gap-2">
               {(isSubmitting || mutation.isPending) ? <><Loader2 className="w-4 h-4 animate-spin" /> Confirming…</> : 'Confirm Booking'}
             </button>
           </div>
@@ -197,7 +197,7 @@ export function BookingsPage() {
             <option value="CANCELLED">Cancelled</option>
           </select>
           <button onClick={() => setBookingOpen(true)}
-            className="flex items-center gap-1.5 bg-[#01a0e2] text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-[#008bc9]">
+            className="flex items-center gap-1.5 bg-[#01a0e2] text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-[#eaf5e5] hover:text-[#365f22]">
             <Plus className="w-4 h-4" /> New Booking
           </button>
         </div>

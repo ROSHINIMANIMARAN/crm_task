@@ -213,7 +213,7 @@ export function LeadsPage() {
             onChange={(value) => { setPriority(value); setPage(1) }}
           />
           <button onClick={() => setFormOpen(true)}
-            className="col-span-2 flex items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#01a0e2] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#008bc9] xl:col-span-1">
+            className="col-span-2 flex items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-[#01a0e2] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#eaf5e5] hover:text-[#365f22] xl:col-span-1">
             <Plus className="w-4 h-4" /> Add Lead
           </button>
         </div>

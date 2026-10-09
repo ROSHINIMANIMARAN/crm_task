@@ -104,7 +104,7 @@ export function PropertiesPage() {
             <h1 className="text-sm font-bold text-gray-900">Properties</h1>
             <p className="mt-0.5 text-xs text-gray-500">{projects.length} saved projects</p>
           </div>
-          {isAdmin && <button aria-label="Add project" title="Add project" onClick={() => setForm('project')} className="rounded-lg bg-[#01a0e2] p-2 text-white hover:bg-[#008bc9]"><Plus className="h-4 w-4" /></button>}
+          {isAdmin && <button aria-label="Add project" title="Add project" onClick={() => setForm('project')} className="rounded-lg bg-[#01a0e2] p-2 text-white hover:bg-[#eaf5e5] hover:text-[#365f22]"><Plus className="h-4 w-4" /></button>}
         </div>
         <div className="space-y-1 p-2">
           {projects.map((project) => (
@@ -135,7 +135,7 @@ export function PropertiesPage() {
                 </div>
                 <p className="mt-1 text-sm text-gray-500">{activeProject.location}</p>
               </div>
-              {isAdmin && <button onClick={() => setForm(activeBuilding ? 'unit' : 'building')} className="flex items-center gap-2 rounded-xl bg-[#01a0e2] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#008bc9]"><Plus className="h-4 w-4" />{activeBuilding ? 'Add unit' : 'Add building'}</button>}
+              {isAdmin && <button onClick={() => setForm(activeBuilding ? 'unit' : 'building')} className="flex items-center gap-2 rounded-xl bg-[#01a0e2] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#eaf5e5] hover:text-[#365f22]"><Plus className="h-4 w-4" />{activeBuilding ? 'Add unit' : 'Add building'}</button>}
             </header>
 
             {activeBuilding ? (
@@ -161,7 +161,7 @@ export function PropertiesPage() {
                 ].map((stat) => <div key={stat.label} className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm"><p className="text-xs text-gray-500">{stat.label}</p><p className="mt-2 text-2xl font-bold text-gray-900">{stat.value}</p></div>)}
                 <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:col-span-2 xl:col-span-3">
                   <div className="mb-3 flex items-center justify-between"><h3 className="text-sm font-bold text-gray-900">Buildings</h3>{isAdmin && <button onClick={() => setForm('building')} className="text-xs font-semibold text-sky-800">Add building</button>}</div>
-                  {activeProject.buildings?.length ? <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{activeProject.buildings.map((building) => <button key={building.id} onClick={() => setSelectedBuildingId(building.id)} className="rounded-xl border border-gray-100 p-4 text-left hover:border-sky-200 hover:bg-sky-50/40"><p className="text-sm font-semibold text-gray-900">{building.name}</p><p className="mt-1 text-xs text-gray-500">{building.floors} floors · {building.units?.length ?? 0} units</p></button>)}</div> : <p className="py-6 text-center text-sm text-gray-500">No building records for this project yet.</p>}
+                  {activeProject.buildings?.length ? <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{activeProject.buildings.map((building) => <button key={building.id} onClick={() => setSelectedBuildingId(building.id)} className="rounded-xl border border-gray-100 p-4 text-left hover:border-[#cfe7c0] hover:bg-[#f4faef]"><p className="text-sm font-semibold text-gray-900">{building.name}</p><p className="mt-1 text-xs text-gray-500">{building.floors} floors · {building.units?.length ?? 0} units</p></button>)}</div> : <p className="py-6 text-center text-sm text-gray-500">No building records for this project yet.</p>}
                 </section>
               </div>
             )}
@@ -169,7 +169,7 @@ export function PropertiesPage() {
         ) : projects.length ? (
           <div className="mx-auto max-w-6xl">
             <h2 className="mb-4 text-lg font-bold text-gray-900">Saved projects</h2>
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{projects.map((project) => <button key={project.id} onClick={() => setSelectedProjectId(project.id)} className="rounded-2xl border border-gray-100 bg-white p-5 text-left shadow-sm hover:border-sky-200"><h3 className="text-sm font-bold text-gray-900">{project.name}</h3><p className="mt-1 text-xs text-gray-500">{project.location}</p><div className="mt-4 flex justify-between text-xs text-gray-500"><span>{project.buildings?.length ?? 0} buildings</span><span>{project.totalUnits ?? 0} units</span></div></button>)}</div>
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{projects.map((project) => <button key={project.id} onClick={() => setSelectedProjectId(project.id)} className="rounded-2xl border border-gray-100 bg-white p-5 text-left shadow-sm hover:border-[#cfe7c0] hover:bg-[#f4faef]"><h3 className="text-sm font-bold text-gray-900">{project.name}</h3><p className="mt-1 text-xs text-gray-500">{project.location}</p><div className="mt-4 flex justify-between text-xs text-gray-500"><span>{project.buildings?.length ?? 0} buildings</span><span>{project.totalUnits ?? 0} units</span></div></button>)}</div>
           </div>
         ) : <div className="flex h-full min-h-64 items-center justify-center"><EmptyState icon={Building2} title="No saved property records" description={isAdmin ? 'Add a project to start recording buildings and available units. No sample inventory is shown.' : 'There are no property records available to your team yet.'} action={isAdmin ? { label: 'Add project', onClick: () => setForm('project') } : undefined} /></div>}
       </main>

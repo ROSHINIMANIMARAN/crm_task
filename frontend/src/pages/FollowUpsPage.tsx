@@ -94,7 +94,7 @@ export function FollowUpsPage() {
             <h1 className="text-lg font-bold text-gray-900">Follow-ups</h1>
             <p className="mt-1 text-xs text-gray-500">Keep every lead conversation on schedule.</p>
           </div>
-          <button onClick={() => setFormOpen(true)} className="flex items-center gap-2 rounded-xl bg-[#01a0e2] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#008bc9]">
+          <button onClick={() => setFormOpen(true)} className="flex items-center gap-2 rounded-xl bg-[#01a0e2] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#eaf5e5] hover:text-[#365f22]">
             <Plus className="h-4 w-4" /> Schedule follow-up
           </button>
         </header>
@@ -167,7 +167,7 @@ export function FollowUpsPage() {
                       <td className="max-w-48 px-4 py-3 text-xs text-gray-500">{item.notes || '—'}</td>
                       <td className="px-4 py-3"><span className={`rounded-full px-2 py-1 text-[10px] font-semibold ${item.status === 'COMPLETED' ? 'bg-sky-50 text-sky-700' : 'bg-amber-50 text-amber-700'}`}>{item.status}</span></td>
                       <td className="px-4 py-3"><div className="flex gap-1">
-                        {item.status !== 'COMPLETED' && <button aria-label="Mark complete" title="Mark complete" onClick={() => updateMutation.mutate(item)} className="rounded-lg p-2 text-sky-700 hover:bg-sky-50"><CheckCircle2 className="h-4 w-4" /></button>}
+                        {item.status !== 'COMPLETED' && <button aria-label="Mark complete" title="Mark complete" onClick={() => updateMutation.mutate(item)} className="rounded-lg p-2 text-sky-700 hover:bg-[#eaf5e5] hover:text-[#4f8f27]"><CheckCircle2 className="h-4 w-4" /></button>}
                         <button aria-label="Delete follow-up" title="Delete follow-up" onClick={() => deleteMutation.mutate(item.id)} className="rounded-lg p-2 text-gray-400 hover:bg-red-50 hover:text-red-600"><Trash2 className="h-4 w-4" /></button>
                       </div></td>
                     </tr>
