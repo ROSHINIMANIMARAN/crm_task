@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 120" fill="none">
+  <g transform="translate(38 31) scale(.48)">
+    <g transform="rotate(45 28 57)">
+      <rect x="14" y="43" width="28" height="28" rx="7" fill="#00A0DF"/>
+    </g>
+    <g transform="rotate(45 54 31)">
+      <rect x="40" y="17" width="28" height="28" rx="7" fill="#00A0DF"/>
+    </g>
+    <g transform="rotate(45 80 57)">
+      <rect x="66" y="43" width="28" height="28" rx="7" fill="#00A0DF"/>
+    </g>
+    <g transform="rotate(45 106 31)">
+      <rect x="92" y="17" width="28" height="28" rx="7" fill="#66B52E"/>
+    </g>
+    <g transform="rotate(45 132 57)">
+      <rect x="118" y="43" width="28" height="28" rx="7" fill="#66B52E"/>
+    </g>
+  </g>
+</svg>

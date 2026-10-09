@@ -1,0 +1,298 @@
+// This is your Prisma schema file
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  SALES_EMPLOYEE
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum LeadStage {
+  NEW
+  CONTACTED
+  SITE_VISIT
+  INTERESTED
+  NEGOTIATION
+  BOOKED
+  LOST
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum LeadSource {
+  PORTAL
+  REFERRAL
+  CHANNEL_PARTNER
+  DIRECT
+  SITE_WALK_IN
+  DIGITAL_CAMPAIGN
+  NRI_REFERRAL
+}
+
+enum PropertyType {
+  TWO_BHK
+  THREE_BHK
+  THREE_BHK_LUXURY
+  FOUR_BHK
+  PENTHOUSE
+  VILLA
+  PLOT
+}
+
+enum UnitStatus {
+  AVAILABLE
+  RESERVED
+  BOOKED
+  BLOCKED
+}
+
+enum ProjectStatus {
+  ACTIVE
+  READY
+  UPCOMING
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum FollowUpStatus {
+  PENDING
+  COMPLETED
+  RESCHEDULED
+  CANCELLED
+}
+
+enum FollowUpType {
+  CALL
+  SITE_VISIT
+  WHATSAPP
+  EMAIL
+  NEGOTIATION
+  MEETING
+}
+
+model User {
+  id           String     @id @default(cuid())
+  name         String
+  email        String     @unique
+  passwordHash String
+  role         Role       @default(SALES_EMPLOYEE)
+  status       UserStatus @default(ACTIVE)
+  designation  String?
+  phone        String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  assignedLeads Lead[]     @relation("AssignedLeads")
+  notes         Note[]
+  activities    Activity[]
+  followUps     FollowUp[] @relation("AssignedFollowUps")
+  bookings      Booking[]
+
+  @@index([email])
+  @@index([role])
+  @@index([status])
+}
+
+model Lead {
+  id                   String        @id @default(cuid())
+  leadNumber           String        @unique
+  name                 String
+  phone                String
+  email                String?
+  alternatePhone       String?
+  designation          String?
+  organization         String?
+  source               LeadSource    @default(PORTAL)
+  budget               String?
+  preferredLocation    String?
+  propertyType         PropertyType?
+  stage                LeadStage     @default(NEW)
+  priority             Priority      @default(MEDIUM)
+  assignedToId         String?
+  interestedProjectId  String?
+  nextFollowUp         DateTime?
+  lastContacted        DateTime?
+  interactionObjective String?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  assignedTo        User?     @relation("AssignedLeads", fields: [assignedToId], references: [id])
+  interestedProject Project?  @relation(fields: [interestedProjectId], references: [id])
+  notes             Note[]
+  activities        Activity[]
+  followUps         FollowUp[]
+  bookings          Booking[]
+
+  @@index([stage])
+  @@index([assignedToId])
+  @@index([priority])
+  @@index([leadNumber])
+  @@index([source])
+}
+
+model Project {
+  id               String        @id @default(cuid())
+  name             String
+  location         String
+  description      String?
+  status           ProjectStatus @default(ACTIVE)
+  reraNumber       String?
+  totalArea        String?
+  handoverDate     String?
+  corridorDistance String?
+  imageUrl         String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  buildings Building[]
+  leads     Lead[]
+  bookings  Booking[]
+
+  @@index([status])
+}
+
+model Building {
+  id         String   @id @default(cuid())
+  projectId  String
+  name       String
+  floors     Int      @default(12)
+  totalUnits Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  project Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  units   Unit[]
+
+  @@index([projectId])
+}
+
+model Unit {
+  id               String     @id @default(cuid())
+  buildingId       String
+  unitNumber       String
+  type             PropertyType
+  floor            Int
+  area             Float
+  carpetArea       Float?
+  price            Float
+  status           UnitStatus @default(AVAILABLE)
+  orientation      String?
+  floorRisePremium Float      @default(0)
+  parkingPrice     Float?     @default(0)
+  isReraCompliant  Boolean    @default(true)
+  lockedByUserId   String?
+  lockedUntil      DateTime?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  building Building  @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+
+  @@unique([buildingId, unitNumber])
+  @@index([buildingId])
+  @@index([status])
+  @@index([type])
+}
+
+model Booking {
+  id              String        @id @default(cuid())
+  bookingNumber   String        @unique
+  leadId          String
+  unitId          String
+  projectId       String
+  salesEmployeeId String
+  bookingAmount   Float
+  totalPrice      Float
+  paymentMethod   String
+  bankUtr         String?
+  bankName        String?
+  bookingDate     DateTime      @default(now())
+  status          BookingStatus @default(PENDING)
+  notes           String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  lead          Lead @relation(fields: [leadId], references: [id])
+  unit          Unit @relation(fields: [unitId], references: [id])
+  project       Project @relation(fields: [projectId], references: [id])
+  salesEmployee User    @relation(fields: [salesEmployeeId], references: [id])
+
+  @@index([leadId])
+  @@index([unitId])
+  @@index([salesEmployeeId])
+  @@index([status])
+  @@index([projectId])
+}
+
+model FollowUp {
+  id           String         @id @default(cuid())
+  leadId       String
+  assignedToId String
+  followUpDate DateTime
+  type         FollowUpType   @default(CALL)
+  notes        String?
+  outcome      String?
+  status       FollowUpStatus @default(PENDING)
+  priority     Priority       @default(MEDIUM)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  lead       Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  assignedTo User @relation("AssignedFollowUps", fields: [assignedToId], references: [id])
+
+  @@index([leadId])
+  @@index([assignedToId])
+  @@index([followUpDate])
+  @@index([status])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  leadId    String
+  userId    String
+  content   String
+  tags      String[]
+  createdAt DateTime @default(now())
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([leadId])
+  @@index([userId])
+}
+
+model Activity {
+  id          String   @id @default(cuid())
+  leadId      String
+  userId      String
+  action      String
+  description String
+  createdAt   DateTime @default(now())
+
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([leadId])
+  @@index([userId])
+  @@index([createdAt])
+}
