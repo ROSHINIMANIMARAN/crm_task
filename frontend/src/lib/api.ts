@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+const API_URL = import.meta.env.VITE_API_URL?.trim() || (import.meta.env.DEV ? '/api' : undefined)
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -9,6 +9,9 @@ export const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
+  if (import.meta.env.PROD && !API_URL) {
+    return Promise.reject(new Error('VITE_API_URL must be set to the deployed backend URL, ending in /api.'))
+  }
   const token = localStorage.getItem('ef_token')
   if (token) config.headers.Authorization = `Bearer ${token}`
   return config

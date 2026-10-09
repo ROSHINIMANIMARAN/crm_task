@@ -73,7 +73,7 @@ export function DashboardPage() {
         <div>
           <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.13em] text-[#9a6b3e] dark:text-[#d5ad82]">{new Intl.DateTimeFormat('en-IN', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}</p>
           <h1 className="text-[22px] font-semibold leading-tight tracking-[-0.03em] text-[#151c25] dark:text-[#e5eaf0]">{greeting}, {name}</h1>
-          <p className="mt-1 text-xs text-[#73808d] dark:text-[#aab7c4]">{isSales ? 'Your assigned leads and scheduled follow-ups.' : 'Your team’s saved lead, property, and booking records.'}</p>
+          
         </div>
         <div className="flex items-center gap-2">
           <button onClick={() => navigate('/follow-ups?new=true')} className="flex items-center gap-1.5 rounded-md border border-[#e6eaf1] bg-white px-3 py-2 text-xs font-semibold text-[#485667] hover:bg-[#f6f8fc] dark:border-[#3b4a59] dark:bg-[#202b36] dark:text-[#d4dde6] dark:hover:bg-[#293745]"><CalendarClock className="h-3.5 w-3.5" /> Schedule follow-up</button>

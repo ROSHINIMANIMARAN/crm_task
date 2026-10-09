@@ -92,6 +92,37 @@ The API listens on `http://localhost:3001` by default. Check that it is respondi
 
 The Vite development server proxies `/api` requests to this backend. Set `FRONTEND_URL` in `backend/.env` to the frontend's origin if it differs from `http://localhost:5173`.
 
+## Deploy to Vercel
+
+The frontend and API are separate applications, so deploy them as **two Vercel projects** from this repository. No database is provisioned by this configuration; provide an existing PostgreSQL database.
+
+### 1. Deploy the backend
+
+Create a Vercel project connected to this repository and set its **Root Directory** to `backend`. Leave framework/build settings at their detected defaults unless Vercel requests a build command; the project build command is `npm run build`. Vercel supplies the runtime port.
+
+Configure these backend environment variables for each Vercel environment you deploy:
+
+| Variable | Value |
+|---|---|
+| `DATABASE_URL` | Connection string for your existing PostgreSQL database. Use the provider's serverless-compatible connection URL when applicable. |
+| `JWT_SECRET` | A unique, long, randomly generated production signing secret. |
+| `FRONTEND_URL` | Exact deployed frontend origin(s), comma-separated if allowing more than one; for example `https://your-frontend.vercel.app`. Do not include `/api` or a trailing path. |
+| `NODE_ENV` | `production` |
+
+The Express API is mounted under `/api`; the health endpoint is `/api/health`. After deployment, verify that the backend project's `/api/health` URL returns JSON with `"status":"ok"`. Ensure the existing database schema is synchronized before using data-backed API routes; do not run the sample seed script against a database containing data you need.
+
+### 2. Deploy the frontend
+
+Create a second Vercel project from the same repository and set its **Root Directory** to `frontend`. Use Vercel's Vite defaults: build command `npm run build`, output directory `dist`. The included `frontend/vercel.json` sends client-side routes to the SPA entry point.
+
+Set `VITE_API_URL` in the frontend project's Vercel environment variables to the deployed backend base URL ending in `/api`, such as `https://your-backend.vercel.app/api`. Set it for Production and any Preview environments that should call the backend. This value is public frontend configuration, not a secret.
+
+Deploy the backend first, then set the frontend's `VITE_API_URL` and deploy the frontend. If using a custom frontend domain, add its exact origin to the backend's `FRONTEND_URL` and redeploy the backend.
+
+### Local-only repository changes
+
+These instructions and files prepare the repository for Vercel, but do not themselves create Vercel projects or deploy the application. Push the changes to GitHub, configure both Vercel projects and their environment variables, then deploy and verify `/api/health`. No `.env` file or production credential should be committed.
+
 ## Build
 
 Build/type-check the frontend:

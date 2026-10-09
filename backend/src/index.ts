@@ -18,12 +18,23 @@ import { reportsRouter } from './routes/reports';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const defaultFrontendOrigin = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173';
+const allowedFrontendOrigins = (process.env.FRONTEND_URL || defaultFrontendOrigin)
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 // Security middleware
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      if (!origin || allowedFrontendOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error('Origin is not allowed by CORS'));
+    },
     credentials: true,
   })
 );
